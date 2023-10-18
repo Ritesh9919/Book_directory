@@ -17,7 +17,23 @@ const addBook = async(req, res) => {
 }
 
 
+const getAllBooks = async(req, res) => {
+    try {
+        const books = await Book.find({});
+        if(!books) {
+            res.status(StatusCodes.NOT_FOUND).json({msg:"Books not found"});
+        }
+        res.status(StatusCodes.OK).json({books, length:books.length});
+    } catch (error) {
+        console.log(error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error:"Something went wrong please try again later"});
+        
+    }
+}
+
+
 
 module.exports = {
-    addBook
+    addBook,
+    getAllBooks
 }
