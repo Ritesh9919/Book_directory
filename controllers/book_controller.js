@@ -48,9 +48,25 @@ const updateBook = async(req, res) => {
 }
 
 
+const deleteBook = async(req, res) => {
+    try {
+        const {id} = req.params;
+        const book = await Book.findById(id);
+        if(!book) {
+            res.status(StatusCodes.NOT_FOUND).json({msg:"Book not found"});
+        }
+        res.status(StatusCodes.OK).json({msg:"Book deleted successfully"});
+    } catch (error) {
+        console.log(error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error:"Something went wrong please try again later"});
+    }
+}
+
+
 
 module.exports = {
     addBook,
     getAllBooks,
-    updateBook
+    updateBook,
+    deleteBook
 }
